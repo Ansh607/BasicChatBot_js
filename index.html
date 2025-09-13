@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Chatbot</title>
+  <style>
+    body { font-family: Arial; background:#f4f4f4; }
+    #chatbox { width: 500px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px; }
+    #messages { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+    .msg { margin: 5px 0; }
+    .user { text-align: right; color: blue; }
+    .bot { text-align: left; color: green; }
+  </style>
+</head>
+<body>
+  <div id="chatbox">
+    <div id="messages"></div>
+    <input type="text" id="input" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</body>
+
+<script>
+  const messages = document.getElementById("messages");
+  const input = document.getElementById("input");
+
+  function addMessage(text, sender) {
+    const msg = document.createElement("div");
+    msg.classList.add("msg", sender);
+    msg.innerText = text;
+    messages.appendChild(msg);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function botReply(userText) {
+    userText = userText.toLowerCase();
+    if (userText.includes("hello")) return "Hi Ansh 👋, how are you?";
+    if (userText.includes("college")) return "You are from ITM University, right?";
+    if (userText.includes("bye")) return "Goodbye! See you soon 👋";
+    return "Sorry, I don't understand 😅";
+  }
+
+  function sendMessage() {
+    const text = input.value;
+    if (!text) return;
+    addMessage(text, "user");
+    input.value = "";
+
+    setTimeout(() => {
+      const reply = botReply(text);
+      addMessage(reply, "bot");
+    }, 500);
+  }
+</script>
+</html>
